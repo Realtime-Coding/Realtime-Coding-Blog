@@ -13,7 +13,6 @@ export default function Channels() {
   const toggleAccordion = (index: string | number) => {
     let temp = [...accordionState]
     temp[index].isShow = !temp[index].isShow
-    console.log(index, temp)
     setAccordionState([...temp])
   }
 
