@@ -27,9 +27,10 @@ function CourseAccordion({ item, index, openIndex, toggleAccordion, currentPage,
       style={{ overflow: 'hidden'}}
     >
       <h2 className="mb-0" id={`heading-${index}`}>
-        <button
-          className={`group relative font-bold flex w-full items-center rounded-t-[15px] border-0 bg-white px-5 py-4 text-left text-base text-neutral-800 transition overflow-anchor-none hover:z-[2] focus:z-[3] focus:outline-none dark:bg-neutral-800 dark:text-white [&:not([data-te-collapse-collapsed])]:bg-white [&:not([data-te-collapse-collapsed])]:text-primary [&:not([data-te-collapse-collapsed])]:[box-shadow:inset_0_-1px_0_rgba(229,231,235)] dark:[&:not([data-te-collapse-collapsed])]:bg-neutral-800 dark:[&:not([data-te-collapse-collapsed])]:text-primary-400 dark:[&:not([data-te-collapse-collapsed])]:[box-shadow:inset_0_-1px_0_rgba(75,85,99)]`}
+        <button 
+          className={`group relative font-bold flex w-full items-center rounded-t-[15px] border-0 bg-white px-5 py-4 text-left text-base text-primary-500 transition overflow-anchor-none hover:z-[2] focus:z-[3] focus:outline-none dark:bg-neutral-800 dark:text-primary-500 [&:not([data-te-collapse-collapsed])]:bg-white [&:not([data-te-collapse-collapsed])]:text-primary-500 [&:not([data-te-collapse-collapsed])]:[box-shadow:inset_0_-1px_0_rgba(229,231,235)] dark:[&:not([data-te-collapse-collapsed])]:bg-neutral-800 dark:[&:not([data-te-collapse-collapsed])]:text-primary-500 dark:[&:not([data-te-collapse-collapsed])]:[box-shadow:inset_0_-1px_0_rgba(75,85,99)]`}
           type="button"
+          style={{ color: '#e75d60' }} // Add this line to set the text color
           onClick={() => toggleAccordion(index)}
         >
           {item.title}
@@ -71,6 +72,7 @@ function CourseAccordion({ item, index, openIndex, toggleAccordion, currentPage,
           <button
             className="px-3 py-1 bg-primary text-primary rounded-md"
             onClick={() => setCurrentPage(Math.max(0, currentPage - 1))}
+            style={{ color: '#e75d60' }}
             disabled={currentPage === 0}
           >
             Previous Page
@@ -80,7 +82,7 @@ function CourseAccordion({ item, index, openIndex, toggleAccordion, currentPage,
               <button
                 key={pageNumber}
                 className={`px-3 py-1 ml-3 rounded-md ${
-                  currentPage === pageNumber - 1 ? 'bg-black text-white' : 'bg-gray-200 text-gray-600'
+                  currentPage === pageNumber - 1 ? 'bg-primary-500 text-white'  : 'bg-gray-200 text-gray-600'
                 }`}
                 onClick={() => setCurrentPage(pageNumber - 1)}
               >
@@ -89,7 +91,8 @@ function CourseAccordion({ item, index, openIndex, toggleAccordion, currentPage,
             ))}
           </div>
           <button
-            className="px-3 py-1 ml-3 bg-primary text-primary rounded-md"
+            className="px-3 py-1 ml-3 bg-primary text-primary rounded-md" 
+            style={{ color: '#e75d60' }}
             onClick={() =>
               setCurrentPage(
                 Math.min(
@@ -170,7 +173,7 @@ function LatestVideoCard(props: any) {
   return (
     <div className="w-full">
       <div className="py-4 px-6">
-        <h3 className="text-primary-500 font-bold uppercase mb-3">Latest Video</h3>
+        <h3 className="font-bold uppercase mb-3" style={{ color: '#e75d60' }}>Latest Video</h3>
         <div>
         <Image
               alt={title}
@@ -210,7 +213,7 @@ function ChannelSection() {
             <h2 className="text-xl font-semibold mb-2">{"Realtime Coding"}</h2>
             <p className="mr-3 text-sm text-gray-600 dark:text-gray-300 w-40 mb-4">{"Sharing is caring and a better way to learn new things then to transform that knowledge to learners."}</p>
             <div className="flex justify-between mb-3">
-              <p className="text-[12px] font-bold text-primary dark:text-primary-500">{"Subscribe"}</p>
+              <p className="text-[12px] font-bold" style={{ color: '#e75d60' }}>Subscribe</p>
               <p className="text-[10px] text-gray-400 dark:text-gray-500">{"Since 2019"}</p>
             </div>
           </div>
