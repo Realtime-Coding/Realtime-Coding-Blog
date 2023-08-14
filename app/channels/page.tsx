@@ -2,22 +2,14 @@
 
 // import { genPageMetadata } from 'app/seo'
 
-<<<<<<< Updated upstream
 // export const metadata = genPageMetadata({ title: 'Channels' })
 
 import React, { useState } from 'react';
 import ChannelCard from './ChannelCard';
 import './channels.css';
 import { DATA } from './databank';
-import Card from '@/components/Card';
-=======
-const metadata = genPageMetadata({ title: 'Channels' })
-import { DATA } from './databank'
-import { useState } from 'react'
 import Image from '@/components/Image'
-import Link from '@/components/Link'
-import { allAuthors } from 'contentlayer/generated'
->>>>>>> Stashed changes
+import logo from '../../public/static/images/logo.png'
 
 function CourseAccordion({ item, index, openIndex, toggleAccordion, currentPage, itemsPerPage, setCurrentPage }) {
   const isOpen = index === openIndex;
@@ -32,10 +24,10 @@ function CourseAccordion({ item, index, openIndex, toggleAccordion, currentPage,
       className={`rounded border ${
         isOpen ? 'border-primary' : 'border-neutral-200'
       } bg-white dark:border-neutral-600 dark:bg-neutral-800`}
-      style={{ overflow: 'hidden'}} 
+      style={{ overflow: 'hidden'}}
     >
       <h2 className="mb-0" id={`heading-${index}`}>
-      <button
+        <button
           className={`group relative font-bold flex w-full items-center rounded-t-[15px] border-0 bg-white px-5 py-4 text-left text-base text-neutral-800 transition overflow-anchor-none hover:z-[2] focus:z-[3] focus:outline-none dark:bg-neutral-800 dark:text-white [&:not([data-te-collapse-collapsed])]:bg-white [&:not([data-te-collapse-collapsed])]:text-primary [&:not([data-te-collapse-collapsed])]:[box-shadow:inset_0_-1px_0_rgba(229,231,235)] dark:[&:not([data-te-collapse-collapsed])]:bg-neutral-800 dark:[&:not([data-te-collapse-collapsed])]:text-primary-400 dark:[&:not([data-te-collapse-collapsed])]:[box-shadow:inset_0_-1px_0_rgba(75,85,99)]`}
           type="button"
           onClick={() => toggleAccordion(index)}
@@ -83,18 +75,19 @@ function CourseAccordion({ item, index, openIndex, toggleAccordion, currentPage,
           >
             Previous Page
           </button>
-          {pageNumbers.map((pageNumber) => (
-            <button
-              key={pageNumber}
-              className={`px-3 py-1 ml-3 rounded-md ${
-                currentPage === pageNumber - 1 ? 'bg-black text-white' // Black for selected page
-                  : 'bg-gray-200 text-gray-600' // Gray for other pages
-              }`}
-              onClick={() => setCurrentPage(pageNumber - 1)}
-            >
-              {pageNumber}
-            </button>
-          ))}
+          <div className="flex overflow-x-auto">
+            {pageNumbers.map((pageNumber) => (
+              <button
+                key={pageNumber}
+                className={`px-3 py-1 ml-3 rounded-md ${
+                  currentPage === pageNumber - 1 ? 'bg-black text-white' : 'bg-gray-200 text-gray-600'
+                }`}
+                onClick={() => setCurrentPage(pageNumber - 1)}
+              >
+                {pageNumber}
+              </button>
+            ))}
+          </div>
           <button
             className="px-3 py-1 ml-3 bg-primary text-primary rounded-md"
             onClick={() =>
@@ -117,12 +110,18 @@ function CourseAccordion({ item, index, openIndex, toggleAccordion, currentPage,
   );
 }
 
-<<<<<<< Updated upstream
+
 export default function Channel() {
   const [openIndex, setOpenIndex] = useState(null);
   const [currentPage, setCurrentPage] = useState(0);
   const itemsPerPage = 6; // Number of items to display per page
-  const latestVideo = DATA.find((item) => item.latest === true); 
+
+  const latestVideosWithPlaylistTitle = DATA.flatMap((parent) =>
+  parent.items
+    .filter((child) => child.latest === true)
+    .map((child) => ({ parentTitle: parent.title, childItem: child }))
+  );
+
   const toggleAccordion = (index) => {
     setOpenIndex((prevIndex) => (prevIndex === index ? null : index));
     setCurrentPage(0); // Reset the page when toggling accordion
@@ -131,8 +130,8 @@ export default function Channel() {
   return (
     <div className="divide-y divide-gray-200 dark:divide-gray-700">
       <div className="space-y-2 pb-8 pt-6 md:space-y-5">
-        <div className="flex sm:space-x-24 container">
-          <div id="accordionExample" className="w-full">
+        <div className="flex sm:space-x-24 container mx-auto">
+          <div id="accordionExample" className="w-full mb-8">
             {DATA.map((item, index) => (
               <CourseAccordion
                 key={index}
@@ -146,17 +145,13 @@ export default function Channel() {
               />
             ))}
           </div>
-          {/* Other stuff area */}
-          <div className="max-h-screen h-full sm:flex flex-wrap bg-gray-50 dark:bg-gray-900/70 shadow-md pt-5 dark:shadow-gray-800/40 rounded min-w-[280px] max-w-[280px]">
-          <LatestVideoCard card={ latestVideo } />
-=======
-            <div className="hidden max-h-screen h-full sm:flex flex-wrap">
-              <div className="py-4 px-6 mb-3 bg-gray-50 dark:bg-gray-900/70 shadow-md pt-5 dark:shadow-gray-800/40 rounded min-w-[280px] max-w-[280px]">
-                <h3 className="text-primary-500 font-bold uppercase mb-3">Latest Video</h3>
-                <>{displayImageInfo()}</>
-              </div>
+          <div className="max-h-screen h-full sm:flex flex-wrap flex justify-center">
+            <div className="mb-8 shadow-md border-red-50 border-1 bg-gray-50 dark:bg-gray-900/70 shadow-md pt-5 dark:shadow-gray-800/40 rounded min-w-[280px] max-w-[280px]">
+              <LatestVideoCard card={latestVideosWithPlaylistTitle}/>
             </div>
->>>>>>> Stashed changes
+            <div>
+              <ChannelSection />
+            </div>
           </div>
         </div>
       </div>
@@ -164,41 +159,65 @@ export default function Channel() {
   );
 }
 
-<<<<<<< Updated upstream
-function LatestVideoCard({ card }) {
+function LatestVideoCard(props: any) {
+  const firstCard = props.card && props.card[0]; // Access the first element of the array
+  if (!firstCard) {
+    return <div>No latest video available.</div>; // Handle the case when the card object is missing or incomplete
+  }
+  const { parentTitle, childItem } = firstCard;
+  const { title, imgSrc, url, description, date: videoDate } = childItem;
+
   return (
     <div className="w-full">
       <div className="py-4 px-6">
-        <h3 className="text-primary-500 font-bold uppercase">Latest Video</h3>
-        <ChannelCard {...card} />
+        <h3 className="text-primary-500 font-bold uppercase mb-3">Latest Video</h3>
+        <div>
+        <Image
+              alt={title}
+              src={imgSrc}
+              className="w-full h-auto rounded-lg mb-3 shadow-md border-red-200 border-2"
+              width={544}
+              height={306}
+            />
+            
+          <h2 className="text-xl font-semibold mb-3">{title}</h2>
+          <p className="mr-3 text-sm text-gray-600 dark:text-gray-300 mb-2">{description}</p>
+          <div className="flex justify-between mb-3">
+            <p className="text-[10px] font-bold text-primary dark:text-gray-500">{parentTitle}</p>
+            <p className="text-[10px] text-gray-400 dark:text-gray-500 text-right">{videoDate}</p>
+          </div>
+        </div>
       </div>
     </div>
   );
 }
 
-=======
-const displayImageInfo = () => {
-  const imageUrl =
-    'https://www.onyourmental.com/_next/image?url=https%3A%2F%2Fi.ytimg.com%2Fvi%2FjLm4u4T9yZQ%2Fmqdefault.jpg&w=640&q=75';
-  const title = 'Firebase With MVVM';
-  const description = 'In this video, you will learn about how to implement MVVM with Firebase';
-  const date = 'August 14, 2023';
-  const time = '3:00 PM'; // Add your desired time here
-
+function ChannelSection() {
   return (
-    <div>
-      <img
-        src={imageUrl}
-        alt={title}
-        className="w-full h-auto rounded-lg mb-3 shadow-md border-red-500 border-4"
-      />
-      <h2 className="text-xl font-semibold mb-2">{title}</h2>
-      <p className="mr-3 text-sm text-gray-600 dark:text-gray-300 mb-2">{description}</p>
-      <div className="flex justify-between mb-3">
-        <p className="text-xs text-gray-400 dark:text-gray-500">{time}</p>
-        <p className="text-xs text-gray-400 dark:text-gray-500 text-right">{date}</p>
+    <div className="w-full">
+      <div className="py-4 px-6">
+        <div className="flex flex-col items-center">
+          <div className="w-44 h-44 rounded-full bg-white shadow-md border-red-200 border-2 mb-3 flex items-center justify-center">
+            <div className="w-40 h-40 p-4 bg-white rounded-full shadow-md">
+              <Image
+                alt={"Realtime Coding"}
+                src={logo}
+                className="w-full h-full object-contain"
+              />
+            </div>
+          </div>
+          <div className="text-center">
+            <h2 className="text-xl font-semibold mb-2">{"Realtime Coding"}</h2>
+            <p className="mr-3 text-sm text-gray-600 dark:text-gray-300 w-40 mb-4">{"Sharing is caring and a better way to learn new things then to transform that knowledge to learners."}</p>
+            <div className="flex justify-between mb-3">
+              <p className="text-[12px] font-bold text-primary dark:text-primary-500">{"Subscribe"}</p>
+              <p className="text-[10px] text-gray-400 dark:text-gray-500">{"Since 2019"}</p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
-};
->>>>>>> Stashed changes
+}
+
+
