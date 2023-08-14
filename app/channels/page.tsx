@@ -1,11 +1,13 @@
 'use client'
 
-import { genPageMetadata } from 'app/seo'
+// import { genPageMetadata } from 'app/seo'
 
-export const metadata = genPageMetadata({ title: 'Channels' })
+// export const metadata = genPageMetadata({ title: 'Channels' })
 
 import { DATA } from './databank'
 import { useState } from 'react'
+import ChannelCard from './ChannelCard'
+import './channels.css'
 
 export default function Channels() {
   const [accordionState, setAccordionState] = useState([...DATA])
@@ -20,13 +22,14 @@ export default function Channels() {
     <>
       <div className="divide-y divide-gray-200 dark:divide-gray-700">
         <div className="space-y-2 pb-8 pt-6 md:space-y-5">
-          <div className="flex sm:space-x-24">
+          <div className="flex sm:space-x-24 container">
             <div id="accordionExample" className="w-full">
               {accordionState.map((item, index) => {
                 return (
                   <div
-                    className="rounded-t-lg border border-neutral-200 bg-white dark:border-neutral-600 dark:bg-neutral-800"
+                    className="rounded-t-lg border border-neutral-200 bg-white dark:border-neutral-600 dark:bg-neutral-800 "
                     key={index}
+                    style={{ maxHeight: '61vh', overflow: 'auto' }}
                   >
                     <h2 className="mb-0" id="headingOne">
                       <button
@@ -72,17 +75,18 @@ export default function Channels() {
                         </span>
                       </button>
                     </h2>
-                    {item.isShow && (
-                      <div id="collapseOne" className="!visible">
-                        <div className="px-5 py-4">{item.text}</div>
-                      </div>
-                    )}
+                    <div className="flex flex-row flex-wrap w-full">
+                      {item.isShow &&
+                        item.items.map((card) => {
+                          return <ChannelCard {...card} />
+                        })}
+                    </div>
                   </div>
                 )
               })}
             </div>
 
-            <div className="hidden max-h-screen h-full sm:flex flex-wrap bg-gray-50 dark:bg-gray-900/70 shadow-md pt-5 dark:shadow-gray-800/40 rounded min-w-[280px] max-w-[280px]">
+            <div className=" max-h-screen h-full sm:flex flex-wrap bg-gray-50 dark:bg-gray-900/70 shadow-md pt-5 dark:shadow-gray-800/40 rounded min-w-[280px] max-w-[280px]">
               <div className="py-4 px-6">
                 <h3 className="text-primary-500 font-bold uppercase">Other stuff area</h3>
               </div>
