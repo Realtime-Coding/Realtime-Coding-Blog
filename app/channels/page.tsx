@@ -2,6 +2,7 @@
 
 // import { genPageMetadata } from 'app/seo'
 
+<<<<<<< Updated upstream
 // export const metadata = genPageMetadata({ title: 'Channels' })
 
 import React, { useState } from 'react';
@@ -9,6 +10,14 @@ import ChannelCard from './ChannelCard';
 import './channels.css';
 import { DATA } from './databank';
 import Card from '@/components/Card';
+=======
+const metadata = genPageMetadata({ title: 'Channels' })
+import { DATA } from './databank'
+import { useState } from 'react'
+import Image from '@/components/Image'
+import Link from '@/components/Link'
+import { allAuthors } from 'contentlayer/generated'
+>>>>>>> Stashed changes
 
 function CourseAccordion({ item, index, openIndex, toggleAccordion, currentPage, itemsPerPage, setCurrentPage }) {
   const isOpen = index === openIndex;
@@ -108,6 +117,7 @@ function CourseAccordion({ item, index, openIndex, toggleAccordion, currentPage,
   );
 }
 
+<<<<<<< Updated upstream
 export default function Channel() {
   const [openIndex, setOpenIndex] = useState(null);
   const [currentPage, setCurrentPage] = useState(0);
@@ -139,6 +149,14 @@ export default function Channel() {
           {/* Other stuff area */}
           <div className="max-h-screen h-full sm:flex flex-wrap bg-gray-50 dark:bg-gray-900/70 shadow-md pt-5 dark:shadow-gray-800/40 rounded min-w-[280px] max-w-[280px]">
           <LatestVideoCard card={ latestVideo } />
+=======
+            <div className="hidden max-h-screen h-full sm:flex flex-wrap">
+              <div className="py-4 px-6 mb-3 bg-gray-50 dark:bg-gray-900/70 shadow-md pt-5 dark:shadow-gray-800/40 rounded min-w-[280px] max-w-[280px]">
+                <h3 className="text-primary-500 font-bold uppercase mb-3">Latest Video</h3>
+                <>{displayImageInfo()}</>
+              </div>
+            </div>
+>>>>>>> Stashed changes
           </div>
         </div>
       </div>
@@ -146,6 +164,7 @@ export default function Channel() {
   );
 }
 
+<<<<<<< Updated upstream
 function LatestVideoCard({ card }) {
   return (
     <div className="w-full">
@@ -157,3 +176,29 @@ function LatestVideoCard({ card }) {
   );
 }
 
+=======
+const displayImageInfo = () => {
+  const imageUrl =
+    'https://www.onyourmental.com/_next/image?url=https%3A%2F%2Fi.ytimg.com%2Fvi%2FjLm4u4T9yZQ%2Fmqdefault.jpg&w=640&q=75';
+  const title = 'Firebase With MVVM';
+  const description = 'In this video, you will learn about how to implement MVVM with Firebase';
+  const date = 'August 14, 2023';
+  const time = '3:00 PM'; // Add your desired time here
+
+  return (
+    <div>
+      <img
+        src={imageUrl}
+        alt={title}
+        className="w-full h-auto rounded-lg mb-3 shadow-md border-red-500 border-4"
+      />
+      <h2 className="text-xl font-semibold mb-2">{title}</h2>
+      <p className="mr-3 text-sm text-gray-600 dark:text-gray-300 mb-2">{description}</p>
+      <div className="flex justify-between mb-3">
+        <p className="text-xs text-gray-400 dark:text-gray-500">{time}</p>
+        <p className="text-xs text-gray-400 dark:text-gray-500 text-right">{date}</p>
+      </div>
+    </div>
+  );
+};
+>>>>>>> Stashed changes
