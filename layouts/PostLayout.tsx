@@ -169,7 +169,7 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
 }
 
 function ChannelSection() {
-  const subscribeUrl = "https://www.youtube.com/@realtimecoding"; // Replace with your actual subscribe URL
+  const subscribeUrl = "https://www.youtube.com/@realtimecoding"; 
   return (
     <div className="w-full">
       <div className="py-4 px-6">
