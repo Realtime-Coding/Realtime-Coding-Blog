@@ -1,0 +1,253 @@
+---
+title: Uploading Multiple Files to FirebaseStorage
+date: '2022-07-05'
+tags: ['android','firebase','mvvm','coroutines','flow','kotlin']
+draft: true
+summary: In this blog, we will learn about uploading multiple files or images to firebase storage using coroutines. 
+images: [/static/images/blog/uploading-multiple-files-to-firebase-stroage.jpg]
+---
+
+### Overview
+
+In this blog, we will learn about uploading multiple files or images to firebase storage using coroutines. I will explain two different methods and there might be other ways to do it but these two methods I have used in projects and tested working fine as expected.
+
+In this blog, you will notice **MVVM** architecture you can avoid other blocks of code which are not necessary to your need just use the code which you need e-g You can copy the function from the repository implementation class which performs the uploading part.
+
+Let's get to the coding part
+
+
+
+### Repository Interface
+
+In this block of code, you will see an interface with two different methods **uploadMultipleFilesMethod1** and **uploadMultipleFilesMethod2. ** We will** **override these methods in the repository Implementation class.
+
+```kotlin
+
+interface NomadRepository {
+    suspend fun uploadMultipleFilesMethod1(
+        fileUris: List<Uri>, 
+        onResult: (UiStateResource<List<Uri>>) -> Unit
+    )
+	suspend fun uploadMultipleFilesMethod2(fileUri: List<Uri>): Flow<UiStateResource<List<Uri>>>
+}
+```
+
+
+
+### Repository Implementation
+
+
+#### Method 1
+
+In the repository implementation, we override the method and If you notice we have 2 Params. 
+
+
+- **fileUris** is a list of selected files uris from Gallery or Device Storage.
+- **onResult** is a lambda function that will work as a callback where we invoke this function and will pass the downloaded uris as a list.
+
+In Method1 If you see in the below block of code mapping **fileUris** to **async** block with await function then awaitAll so it will call each **asyn** block then will wait for the result for example you have to upload 3 files to firebase storage and you just map that list into **async** block then calling **awaitAll** It will upload each file in sequence then will wait for the result in sequence 
+
+like first **asyn** block execute then waiting for the result once it gets the result then will call the second async block and so on until we get all the result.
+
+If there is any **exception** occurred during execution then we can handle that exception easily with the help of **try catch** in the catch block get the message from the exception then pass it in the Failure state or log what the error message indicates.
+
+```kotlin
+   override suspend fun uploadMultipleFilesMethod1(fileUris: List<Uri>, onResult: (UiStateResource<List<Uri>>) -> Unit) {
+        try {
+            val uris: List<Uri> = withContext(Dispatchers.IO) {
+                fileUris.map { uri ->
+                    async {
+                        storageReference
+                            .putFile(uri)
+                            .await()
+                            .storage
+                            .downloadUrl
+                            .await()
+                    }
+                }.awaitAll()
+            }
+            onResult.invoke(UiStateResource.Success(uris))
+        } catch (e: FirebaseFirestoreException) {
+            onResult.invoke(UiStateResource.Failure(e.message))
+        }
+    }
+```
+
+
+#### Method 2
+
+In the repository implementation class we override the method and If you notice we have 1 Param 
+
+
+- **fileUris** is a list of Uris collected from Gallery or Device Storage
+
+In Method2 using **flow** instead **withContext(Dispatchers.IO)**
+
+
+- emit first Loading state 
+- emit again and mapping list into asynchronous uploading file using await functions 
+
+Once all the files are mapped into Uris list means uploading all the files to FirebaseStorage with downloaded Urls then emit as Success state with data as a list of uris. 
+
+In case of exception occurs or uploads failed thrown exception then flow is providing a catch block as well where we can notice or check the thrown exception and pass the message in the Failure state
+
+```kotlin
+ override suspend fun uploadMultipleFilesMethod2(fileUri: List<Uri>) = flow {
+        emit(UiStateResource.Loading)
+        emit(
+            UiStateResource.Success(
+                fileUri.map { uri ->
+                    storageReference
+                        .putFile(uri)
+                        .await()
+                        .storage
+                        .downloadUrl
+                        .await()
+                })
+        )
+    }.catch { error ->
+        error.message?.let { errorMessage ->
+            emit(UiStateResource.Failure(errorMessage))
+        }
+    }
+```
+
+
+If you notice await is calling twice in both methods, the first one calling after **putFile** then the second one calling after **downloadUrl**
+
+
+- First await call function will trigger uploading file to firebase storage than will wait until it's uploaded
+- Second await call function will trigger the download url task. As in sequence If you notice it’s only calling when the file is uploaded then it downloads the url of the uploaded file.
+
+
+
+### ViewModel
+
+In the ViewModel class If you notice we are using viewModel Scope because we have declared  the methods as suspend in the Repository interface which required Coroutine scope to call the function
+
+```kotlin
+ fun onUploadFilesMethod1(fileUris: List<Uri>, onResult: (UiStateResource<List<Uri>>) -> Unit){
+        onResult.invoke(UiStateResource.Loading)
+        viewModelScope.launch {
+            repository.uploadMultipleFilesMethod1(fileUris,onResult)
+        }
+    }
+
+ fun onUploadFilesMethod2(fileUris: List<Uri>, onResult: (UiStateResource<List<Uri>>) -> Unit) = viewModelScope.launch {
+        repository.uploadMultipleFilesMethod2(fileUris).collect { onResult.invoke(it) }
+    }
+
+
+```
+
+
+
+### Fragment
+
+In the fragment class, we have used the when condition statement to check the state we are getting from the repository. You can check UiStateResource class in the following block of code. It’s a good practice to use that class to different states based on actions or events that happened.
+
+```kotlin
+ viewModel.onUploadFilesMethod1(arrayListOf(fileUri,fileUri,fileUri,fileUri)){ state ->
+   when (state) {
+     is UiStateResource.Loading -> {
+         Log.e(TAG,"onUploadFilesMethod1, Loading")
+       }
+     is UiStateResource.Failure -> {
+         Log.e(TAG,"onUploadFilesMethod1, Failure")
+       }
+     is UiStateResource.Success -> {
+         val uris = state.data.map { it.toString() }.joinToString("onUploadFilesMethod1: \n")
+         Log.e(TAG,"Success ${uris}")                   
+       }
+    }                   
+  }
+
+ viewModel.onUploadFilesMethod2(arrayListOf(fileUri,fileUri,fileUri,fileUri)){ state ->
+   when (state) {
+     is UiStateResource.Loading -> {
+         Log.e(TAG,"onUploadFilesMethod1, Loading")
+       }
+     is UiStateResource.Failure -> {
+         Log.e(TAG,"onUploadFilesMethod1, Failure")
+       }
+     is UiStateResource.Success -> {
+         val uris = state.data.map { it.toString() }.joinToString("onUploadFilesMethod1: \n")
+         Log.e(TAG,"Success ${uris}")                   
+       }
+    }                   
+  }
+```
+
+
+
+### UiStateResource
+
+UiStateResource is a sealed class with one object and two data class that represent the following states
+
+
+- Loading (It can help us to show the progress bar or do your own logic before starting uploading)
+- Success (It indicates that everything went well and returns the excepted result)
+- Failure (it indicates that there is an exception or failure occurred while uploading)
+
+```kotlin
+sealed class UiStateResource<out T> {
+    object Loading : UiStateResource<Nothing>()
+    data class Success<out T>(val data: T) : UiStateResource<T>() 
+    data class Failure(val error: String?) : UiStateResource<Nothing>()
+}
+```
+
+### Youtube Video
+
+{/* [![Watch the video](/static/images/blog/uploading-multiple-files-to-firebase-stroage.jpg)](https://www.youtube.com/watch?v=jy8QzgW1oYk) */}
+
+<div align="left">
+  <a href="https://www.youtube.com/watch?v=jy8QzgW1oYk">
+    <div style={{ 
+      position: 'relative', 
+      display: 'inline-block' 
+    }}>
+      <img
+        src="/static/images/blog/uploading-multiple-files-to-firebase-stroage.jpg"
+        alt="YouTube Video Thumbnail"
+        style={{
+          width: '100%',
+          border: '2px solid #e75d60', 
+        }}
+      />
+      <div
+        style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          width: '100%',
+          background: 'rgba(0, 0, 0, 0.9)', // Black overlay with 50% opacity
+        }}
+      />
+      <img
+        src="/static/images/youtube-play-btn.png"  
+        alt="Play Icon"
+        style={{
+          position: 'absolute',
+          top: '40%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          width: '120px', // Adjust the size of the play icon as needed
+          height: '85px',
+        }}
+      />
+    </div>
+  </a>
+</div>
+
+
+
+> Realtime Coding 
+
+> Sharing is caring and a better way to learn new things then to transform that knowledge to learners.
+
+> You can follow us on social media platforms for the latest updates and information.
+[Twitter](https://twitter.com/rtcoding) . [Facebook](https://web.facebook.com/realtimecoding) . [Instagram](https://www.instagram.com/realtimecoding) . [Github](https://github.com/realtimecoding). [Youtube](https://www.youtube.com/channel/UCEw8TWSpI1sgcpv1_dmi8qg/featured)
+
+> Thank you for reading the tutorials and support!
+
