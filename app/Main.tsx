@@ -77,6 +77,7 @@ export default function Home({ posts }) {
             href="/blog"
             className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400"
             aria-label="All posts"
+            style={{ color: '#e75d60' }}
           >
             All Posts &rarr;
           </Link>
