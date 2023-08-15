@@ -9,7 +9,7 @@ import logo from '../../public/static/images/logo.png'
 import { genPageMetadata } from 'app/seo'
 const metadata = genPageMetadata({ title: 'Youtube' })
 
-export function CourseAccordion({ item, index, openIndex, toggleAccordion, currentPage, itemsPerPage, setCurrentPage }) {
+function CourseAccordion({ item, index, openIndex, toggleAccordion, currentPage, itemsPerPage, setCurrentPage }) {
   const isOpen = index === openIndex;
   const startIndex = currentPage * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
@@ -159,7 +159,7 @@ export default function Channel() {
   );
 }
 
-export function LatestVideoCard(props: any) {
+function LatestVideoCard(props: any) {
   const firstCard = props.card && props.card[0]; // Access the first element of the array
   if (!firstCard) {
     return <div>No latest video available.</div>; // Handle the case when the card object is missing or incomplete
@@ -192,7 +192,7 @@ export function LatestVideoCard(props: any) {
   );
 }
 
-export function ChannelSection() {
+function ChannelSection() {
   return (
     <div className="w-full">
       <div className="py-4 px-6">
