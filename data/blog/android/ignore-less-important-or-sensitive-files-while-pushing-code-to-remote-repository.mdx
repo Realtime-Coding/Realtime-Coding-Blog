@@ -1,0 +1,54 @@
+---
+title: Ignore less important or sensitive files while pushing code to remote repository
+date: '2022-10-10'
+tags: ['android','git']
+draft: true
+summary: In android, some files and directories can be ignored while pushing code to the remote repository.
+images: [/static/images/blog/ignore-less-important-or-sensitive-files-while-pushing-code-to-remote-repository.jpg]
+---
+
+
+Nowadays Git is included in every project we created on android studio so there must be some files or directories which we don’t want to share on a remote repository and prefer to keep safe on our local machine in that case .gitignore file comes to the rescue.
+
+.gitignore file tells VCS, the files/directory path mentioned in the .gitignore file, don’t need to upload to the remote repository so on the safe side files ignored while pushing code to the remote repository.
+
+I am sharing already made template for android so you can just copy and paste it to save time and search for ignoring less important and sensitive files to remote repository 
+
+
+```groovy
+# Gradle files
+.gradle/
+build/
+
+# Local configuration file (sdk path, etc)
+local.properties
+
+# Log/OS Files
+*.log
+
+# Android Studio generated files and folders
+captures/
+.externalNativeBuild/
+.cxx/
+*.apk
+output.json
+
+# IntelliJ
+*.iml
+.idea/
+misc.xml
+deploymentTargetDropDown.xml
+render.experimental.xml
+
+# Keystore files
+*.jks
+*.keystore
+
+# Google Services (e.g. APIs or Firebase)
+google-services.json
+
+# Android Profiling
+*.hprof
+```
+
+Source: https://github.com/github/gitignore/blob/main/Android.gitignore
