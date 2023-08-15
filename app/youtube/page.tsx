@@ -193,6 +193,7 @@ function LatestVideoCard(props: any) {
 }
 
 function ChannelSection() {
+  const subscribeUrl = "https://www.youtube.com/@realtimecoding"; 
   return (
     <div className="w-full">
       <div className="py-4 px-6">
@@ -210,7 +211,9 @@ function ChannelSection() {
             <h2 className="text-xl font-semibold mb-2" style={{ color: '#e75d60' }} >{"Realtime Coding"}</h2>
             <p className="mr-3 text-sm text-gray-600 dark:text-gray-300 w-40 mb-4">{"Sharing is caring and a better way to learn new things then to transform that knowledge to learners."}</p>
             <div className="flex justify-between mb-3">
-              <p className="text-primary-500 text-[12px] font-bold" style={{ color: '#e75d60' }} >Subscribe</p>
+              <a href={subscribeUrl} target="_blank" rel="noopener noreferrer">
+                <p className="text-primary-500 text-[12px] font-bold" style={{ color: '#e75d60' }} >Subscribe</p>
+              </a>
               <p className="text-[10px] text-gray-400 dark:text-gray-500">{"Since 2019"}</p>
             </div>
           </div>

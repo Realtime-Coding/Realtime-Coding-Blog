@@ -1,19 +1,15 @@
 const projectsData = [
   {
-    title: 'A Search Engine',
-    description: `What if you could look up any information in the world? Webpages, images, videos
-    and more. Google has many features to help you find exactly what you're looking
-    for.`,
-    imgSrc: '/static/images/google.png',
-    href: 'https://www.google.com',
+    title: 'Travel APP (Kotlin Multiplatform Mobile)',
+    description: `Travel App is a simple mobile application built to demonstrate the use of Kotlin Multiplatform Mobile for developing Android and iOS applications using Jetpack Compose 🚀.`,
+    imgSrc: '/static/images/project/travel-app-kmp.png',
+    href: 'https://github.com/Realtime-Coding/TravelAppKMP',
   },
   {
-    title: 'The Time Machine',
-    description: `Imagine being able to travel back in time or to the future. Simple turn the knob
-    to the desired date and press "Go". No more worrying about lost keys or
-    forgotten headphones with this simple yet affordable solution.`,
-    imgSrc: '/static/images/time-machine.jpg',
-    href: '/blog/the-time-machine',
+    title: 'Firebase with MVVM',
+    description: `Firebase with MVVM is a series of videos in which you will learn how to implement firebase with MVVM along with UI designs, GitHub branches, merging, and resolving conflicts.`,
+    imgSrc: '/static/images/project/firebase-with-mvvm.jpg',
+    href: 'https://github.com/Realtime-Coding/FirebaseWithMVVM',
   },
 ]
 
