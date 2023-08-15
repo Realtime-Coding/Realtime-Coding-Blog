@@ -3,6 +3,10 @@ import Link from 'next/link'
 import type { LinkProps } from 'next/link'
 import { AnchorHTMLAttributes } from 'react'
 
+const customStyles = {
+  color: '#e75d60', // Custom color
+};
+
 const CustomLink = ({ href, ...rest }: LinkProps & AnchorHTMLAttributes<HTMLAnchorElement>) => {
   const isInternalLink = href && href.startsWith('/')
   const isAnchorLink = href && href.startsWith('#')
@@ -12,10 +16,10 @@ const CustomLink = ({ href, ...rest }: LinkProps & AnchorHTMLAttributes<HTMLAnch
   }
 
   if (isAnchorLink) {
-    return <a href={href} {...rest} />
+    return <a href={href} {...rest} style={customStyles} />
   }
 
-  return <a target="_blank" rel="noopener noreferrer" href={href} {...rest} />
+  return <a target="_blank" rel="noopener noreferrer" href={href} {...rest} style={customStyles} />
 }
 
 export default CustomLink

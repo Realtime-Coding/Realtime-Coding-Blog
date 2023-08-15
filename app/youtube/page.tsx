@@ -9,7 +9,7 @@ import logo from '../../public/static/images/logo.png'
 import { genPageMetadata } from 'app/seo'
 const metadata = genPageMetadata({ title: 'Youtube' })
 
-function CourseAccordion({ item, index, openIndex, toggleAccordion, currentPage, itemsPerPage, setCurrentPage }) {
+export function CourseAccordion({ item, index, openIndex, toggleAccordion, currentPage, itemsPerPage, setCurrentPage }) {
   const isOpen = index === openIndex;
   const startIndex = currentPage * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
@@ -19,15 +19,15 @@ function CourseAccordion({ item, index, openIndex, toggleAccordion, currentPage,
 
   return (
     <div
-      className={`rounded border ${
-        isOpen ? 'border-primary' : 'border-neutral-200'
-      } bg-white dark:border-neutral-600 dark:bg-neutral-800`}
+      className={`rounded border ${ isOpen ? 'border-primary' : 'border-neutral-200' }
+       bg-white dark:border-neutral-600 dark:bg-gray-900/70`}
       style={{ overflow: 'hidden'}}
     >
       <h2 className="mb-0" id={`heading-${index}`}>
         <button 
-          className={`group relative font-bold flex w-full items-center rounded-t-[15px] border-0 bg-white px-5 py-4 text-left text-base text-primary-500 transition overflow-anchor-none hover:z-[2] focus:z-[3] focus:outline-none dark:bg-neutral-800 dark:text-primary-500 [&:not([data-te-collapse-collapsed])]:bg-white [&:not([data-te-collapse-collapsed])]:text-primary-500 [&:not([data-te-collapse-collapsed])]:[box-shadow:inset_0_-1px_0_rgba(229,231,235)] dark:[&:not([data-te-collapse-collapsed])]:bg-neutral-800 dark:[&:not([data-te-collapse-collapsed])]:text-primary-500 dark:[&:not([data-te-collapse-collapsed])]:[box-shadow:inset_0_-1px_0_rgba(75,85,99)]`}
+          className={`group relative font-bold flex w-full items-center rounded-t-[15px] border-0 bg-white px-5 py-4 text-left text-base text-primary-500 transition overflow-anchor-none hover:z-[2] focus:z-[3] focus:outline-none dark:bg-gray-900/70 dark:text-primary-500 [&:not([data-te-collapse-collapsed])]:bg-white [&:not([data-te-collapse-collapsed])]:text-primary-500 [&:not([data-te-collapse-collapsed])]:[box-shadow:inset_0_-1px_0_rgba(229,231,235)] dark:[&:not([data-te-collapse-collapsed])]:bg-gray-900/70 dark:[&:not([data-te-collapse-collapsed])]:text-primary-500 dark:[&:not([data-te-collapse-collapsed])]:[box-shadow:inset_0_-1px_0_rgba(75,85,99)]`}
           type="button"
+          style={{ color: '#e75d60' }} 
           onClick={() => toggleAccordion(index)}
         >
           {item.title}
@@ -69,6 +69,7 @@ function CourseAccordion({ item, index, openIndex, toggleAccordion, currentPage,
           <button
             className="text-primary-500 px-3 py-1 bg-primary text-primary rounded-md"
             onClick={() => setCurrentPage(Math.max(0, currentPage - 1))}
+            style={{ color: '#e75d60' }} 
             disabled={currentPage === 0}
           >
             Previous Page
@@ -88,6 +89,7 @@ function CourseAccordion({ item, index, openIndex, toggleAccordion, currentPage,
           </div>
           <button
             className="text-primary-500 px-3 py-1 ml-3 bg-primary text-primary rounded-md" 
+            style={{ color: '#e75d60' }} 
             onClick={() =>
               setCurrentPage(
                 Math.min(
@@ -157,7 +159,7 @@ export default function Channel() {
   );
 }
 
-function LatestVideoCard(props: any) {
+export function LatestVideoCard(props: any) {
   const firstCard = props.card && props.card[0]; // Access the first element of the array
   if (!firstCard) {
     return <div>No latest video available.</div>; // Handle the case when the card object is missing or incomplete
@@ -168,7 +170,7 @@ function LatestVideoCard(props: any) {
   return (
     <div className="w-full">
       <div className="py-4 px-6">
-        <h3 className="ftext-primary-500 ont-bold uppercase mb-3">Latest Video</h3>
+        <h3 className="ftext-primary-500 font-bold uppercase mb-3" style={{ color: '#e75d60' }}>Latest Video</h3>
         <div>
         <Image
               alt={title}
@@ -181,8 +183,8 @@ function LatestVideoCard(props: any) {
           <h2 className="text-xl font-semibold mb-3">{title}</h2>
           <p className="mr-3 text-sm text-gray-600 dark:text-gray-300 mb-2">{description}</p>
           <div className="flex justify-between mb-3">
-            <p className="text-[10px] font-bold text-primary dark:text-gray-500">{parentTitle}</p>
-            <p className="text-[10px] text-gray-400 dark:text-gray-500 text-right">{videoDate}</p>
+            <p className="text-[11px] font-bold text-primary dark:text-gray-500" style={{ color: '#e75d60' }} >{parentTitle}</p>
+            <p className="text-[9px] text-gray-400 dark:text-gray-500 text-right">{videoDate}</p>
           </div>
         </div>
       </div>
@@ -190,7 +192,7 @@ function LatestVideoCard(props: any) {
   );
 }
 
-function ChannelSection() {
+export function ChannelSection() {
   return (
     <div className="w-full">
       <div className="py-4 px-6">
@@ -205,10 +207,10 @@ function ChannelSection() {
             </div>
           </div>
           <div className="text-center">
-            <h2 className="text-xl font-semibold mb-2">{"Realtime Coding"}</h2>
+            <h2 className="text-xl font-semibold mb-2" style={{ color: '#e75d60' }} >{"Realtime Coding"}</h2>
             <p className="mr-3 text-sm text-gray-600 dark:text-gray-300 w-40 mb-4">{"Sharing is caring and a better way to learn new things then to transform that knowledge to learners."}</p>
             <div className="flex justify-between mb-3">
-              <p className="text-primary-500 text-[12px] font-bold">Subscribe</p>
+              <p className="text-primary-500 text-[12px] font-bold" style={{ color: '#e75d60' }} >Subscribe</p>
               <p className="text-[10px] text-gray-400 dark:text-gray-500">{"Since 2019"}</p>
             </div>
           </div>
