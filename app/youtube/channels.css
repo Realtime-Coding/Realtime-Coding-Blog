@@ -22,6 +22,15 @@
 
 }
 
+.custom-border-color {
+    color: #e75d60; /* Your custom color */
+  }
+
+  .custom-border {
+    border: 5px solid #e75d60; /* Your custom color */
+  }
+    
+
 /* Media query for screens less than 1180px */
 @media (max-width: 1280px) {
   
@@ -51,5 +60,6 @@
     flex-direction: column;
 }
     
-    
       }
+
+
