@@ -66,7 +66,7 @@ module.exports = () => {
       dirs: ['app', 'components', 'layouts', 'scripts'],
     },
     images: {
-      domains: ['picsum.photos','www.onyourmental.com'],
+      domains: ['i.ytimg.com'],
     },
     experimental: {
       appDir: true,

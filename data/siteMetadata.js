@@ -9,14 +9,14 @@ const siteMetadata = {
   siteUrl: 'https://realtimecoding.com',
   siteRepo: 'https://realtimecoding.com',
   siteLogo: '/static/images/logo.png',
-  socialBanner: '/static/images/twitter-card.png',
-  mastodon: 'https://mastodon.social/@mastodonuser',
+  socialBanner: '/static/images/logo.png',
+  mastodon: 'https://mastodon.social/@realtimecoding',
   email: 'realtimecoding@gmail.com',
   github: 'https://github.com/realtimecoding',
   twitter: 'https://twitter.com/rtcoding',
   facebook: 'https://facebook.com/realtimecoding',
   youtube: 'https://youtube.com/@realtimecoding',
-  linkedin: 'https://www.linkedin.com/in/imshahzadafridi',
+  linkedin: 'https://www.linkedin.com/company/70953305/',
   locale: 'en-US',
   analytics: {
     // If you want to use an analytics provider you have to add it to the

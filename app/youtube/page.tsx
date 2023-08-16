@@ -115,13 +115,6 @@ export default function Channel() {
   const [openIndex, setOpenIndex] = useState(null);
   const [currentPage, setCurrentPage] = useState(0);
   const itemsPerPage = 6; // Number of items to display per page
-
-  const latestVideosWithPlaylistTitle = DATA.flatMap((parent) =>
-  parent.items
-    .filter((child) => child.latest === true)
-    .map((child) => ({ parentTitle: parent.title, childItem: child }))
-  );
-
   const toggleAccordion = (index) => {
     setOpenIndex((prevIndex) => (prevIndex === index ? null : index));
     setCurrentPage(0); // Reset the page when toggling accordion
@@ -132,7 +125,7 @@ export default function Channel() {
       <div className="space-y-2 pb-8 pt-6 md:space-y-5">
         <div className="flex sm:space-x-24 container mx-auto">
           <div id="accordionExample" className="w-full mb-8">
-            {DATA.map((item, index) => (
+            {DATA.playlist.map((item, index) => (
               <CourseAccordion
                 key={index}
                 item={item}
@@ -147,7 +140,7 @@ export default function Channel() {
           </div>
           <div className="max-h-screen h-full sm:flex flex-wrap flex justify-center">
             <div className="mb-8 shadow-md border-red-50 border-1 bg-gray-50 dark:bg-gray-900/70 shadow-md pt-5 dark:shadow-gray-800/40 rounded min-w-[280px] max-w-[280px]">
-              <LatestVideoCard card={latestVideosWithPlaylistTitle}/>
+              <LatestVideoCard card={DATA.latest}/>
             </div>
             <div>
               <ChannelSection />
@@ -160,31 +153,29 @@ export default function Channel() {
 }
 
 function LatestVideoCard(props: any) {
-  const firstCard = props.card && props.card[0]; // Access the first element of the array
-  if (!firstCard) {
-    return <div>No latest video available.</div>; // Handle the case when the card object is missing or incomplete
-  }
-  const { parentTitle, childItem } = firstCard;
-  const { title, imgSrc, url, description, date: videoDate } = childItem;
+  const { playlistTitle, data } = props.card
+  const { title, thumbnailUrl, url, text, date: date } = data;
 
   return (
     <div className="w-full">
       <div className="py-4 px-6">
         <h3 className="ftext-primary-500 font-bold uppercase mb-3" style={{ color: '#e75d60' }}>Latest Video</h3>
         <div>
-        <Image
+          <a href={url} target="_blank" rel="noopener noreferrer">
+            <Image
               alt={title}
-              src={imgSrc}
+              src={thumbnailUrl}
               className="w-full h-auto rounded-lg mb-3 shadow-md border-red-200 border-2"
               width={544}
               height={306}
             />
-            
+          </a>
+          
           <h2 className="text-xl font-semibold mb-3">{title}</h2>
-          <p className="mr-3 text-sm text-gray-600 dark:text-gray-300 mb-2">{description}</p>
-          <div className="flex justify-between mb-3">
-            <p className="text-[11px] font-bold text-primary dark:text-gray-500" style={{ color: '#e75d60' }} >{parentTitle}</p>
-            <p className="text-[9px] text-gray-400 dark:text-gray-500 text-right">{videoDate}</p>
+          <p className="mr-3 text-sm text-gray-600 dark:text-gray-300 mb-4">{text.length > 90 ? text.substring(0, 90) + "..." : text}</p>
+          <div className="flex justify-between items-center mb-3">
+            <p className="text-[12px] font-bold text-primary dark:text-gray-500" style={{ color: '#e75d60' }}>{playlistTitle}</p>
+            <p className="text-[9px] text-gray-400 dark:text-gray-500 text-right">{date}</p>
           </div>
         </div>
       </div>
