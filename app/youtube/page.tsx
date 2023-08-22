@@ -172,10 +172,10 @@ function LatestVideoCard(props: any) {
           </a>
           
           <h2 className="text-xl font-semibold mb-3">{title}</h2>
-          <p className="mr-3 text-sm text-gray-600 dark:text-gray-300 mb-4">{text.length > 90 ? text.substring(0, 90) + "..." : text}</p>
+          <p className="mr-3 text-sm text-gray-800 dark:text-gray-100 mb-4">{text.length > 90 ? text.substring(0, 90) + "..." : text}</p>
           <div className="flex justify-between items-center mb-3">
             <p className="text-[12px] font-bold text-primary dark:text-gray-500" style={{ color: '#e75d60' }}>{playlistTitle}</p>
-            <p className="text-[9px] text-gray-400 dark:text-gray-500 text-right">{date}</p>
+            <p className="text-[9px] text-gray-800 dark:text-gray-100 text-right">{date}</p>
           </div>
         </div>
       </div>
