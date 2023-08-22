@@ -10,6 +10,7 @@ import Link from '@/components/Link'
 import Tag from '@/components/Tag'
 import siteMetadata from '@/data/siteMetadata'
 import tagData from 'app/tag-data.json'
+import { Analytics } from '@vercel/analytics/react';
 
 interface PaginationProps {
   totalPages: number
@@ -83,6 +84,7 @@ export default function ListLayoutWithTags({
             {title}
           </h1>
         </div>
+        <Analytics />
         <div className="flex sm:space-x-24">
           <div>
             <ul>

@@ -1,6 +1,7 @@
 import projectsData from '@/data/projectsData'
 import Card from '@/components/Card'
 import { genPageMetadata } from 'app/seo'
+import { Analytics } from '@vercel/analytics/react';
 
 export const metadata = genPageMetadata({ title: 'Projects' })
 
@@ -13,6 +14,7 @@ export default function Projects() {
             Projects
           </h1>
         </div>
+        <Analytics />
         <div className="container py-12">
           <div className="-m-4 flex flex-wrap">
             {projectsData.map((d) => (

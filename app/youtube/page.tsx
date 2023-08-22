@@ -7,6 +7,7 @@ import { DATA } from './databank';
 import Image from '@/components/Image'
 import logo from '../../public/static/images/logo.png'
 import { genPageMetadata } from 'app/seo'
+import { Analytics } from '@vercel/analytics/react';
 const metadata = genPageMetadata({ title: 'Youtube' })
 
 function CourseAccordion({ item, index, openIndex, toggleAccordion, currentPage, itemsPerPage, setCurrentPage }) {
@@ -124,6 +125,7 @@ export default function Channel() {
     <div className="divide-y divide-gray-200 dark:divide-gray-700">
       <div className="space-y-2 pb-8 pt-6 md:space-y-5">
         <div className="flex sm:space-x-24 container mx-auto">
+        <Analytics />
           <div id="accordionExample" className="w-full mb-8">
             {DATA.playlist.map((item, index) => (
               <CourseAccordion
