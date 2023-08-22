@@ -10,6 +10,7 @@ import siteMetadata from '@/data/siteMetadata'
 import ScrollTopAndComment from '@/components/ScrollTopAndComment'
 import Image from '@/components/Image'
 import logo from '../public/static/images/logo.png'
+import { Analytics } from '@vercel/analytics/react';
 
 interface LayoutProps {
   content: CoreContent<Blog>
@@ -41,6 +42,7 @@ export default function PostLayout({ content, next, prev, children }: LayoutProp
               </div>
             </div>
           </header>
+          <Analytics />
           <div className="grid-rows-[auto_1fr] divide-y divide-gray-200 pb-8 dark:divide-gray-700 xl:divide-y-0">
             <div className="divide-y text-gray-800 dark:text-gray-100 xl:col-span-3 xl:row-span-2 xl:pb-0">
               <div className="prose max-w-none pb-8 pt-10 dark:prose-invert">{children}</div>

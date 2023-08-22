@@ -8,6 +8,7 @@ import type { Blog } from 'contentlayer/generated'
 import Link from '@/components/Link'
 import Tag from '@/components/Tag'
 import siteMetadata from '@/data/siteMetadata'
+import { Analytics } from '@vercel/analytics/react';
 
 interface PaginationProps {
   totalPages: number
@@ -110,6 +111,7 @@ export default function ListLayout({
             </svg>
           </div>
         </div>
+        <Analytics />
         <ul>
           {!filteredBlogPosts.length && 'No posts found.'}
           {displayPosts.map((post) => {
