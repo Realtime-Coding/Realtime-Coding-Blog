@@ -1,0 +1,310 @@
+---
+title: Essential Guide to Dart Data Types
+date: '2024-05-01'
+tags: ['flutter','android','ios','hybrid']
+draft: false
+summary: Boost Your Flutter Development The Essential Guide to Dart Data Types
+authors: [ 'sparrowhawk']
+images: [/static/images/blog/boost-your-flutter-development-the-essential-guide-to-dart-data-types-image--01.png]
+---
+
+### Dart Language:
+
+
+Dart is **object oriented** programming language developed by **google** later on integrated by **flutter** framework for creating hybrid mobile apps which is also develped by google.Dart is a statically typed language, which means that variables always have the same type, which cannot be changed. However, type annotations are optional because of type inference. This means that the data type of a variable need not be explicitly declared, as Dart will “infer” what it is. For example, `var something;` instead of `String something;`.
+
+### Dart Data Types:
+
+
+data types is core fundamental for any programming language, Data types in Dart are used to categorize the different types of data used in code, such as numbers, texts, and symbols. Each variable has its own data type. Dart has the following built-in data types:
+
+
+- **Basic Building Blocks:**
+	- `int`: Whole numbers (e.g., 10, -5)
+	- `double`: Numbers with decimals (e.g., 3.14, -12.5)
+	- `String`: Text (e.g., "Hello, world!", 'Dart')
+	- `bool`: True or false (e.g., true, false)
+- **Organizing Data:**
+	- `List`: Ordered collections of items (e.g., [1, 2, 3, "apple"])
+	- `Map`: Unordered collections of key-value pairs (e.g., ```{"name": "John", "age": 30})```
+	- `Set`: Unique collections of items (e.g., {1, 2, 3, "apple"})
+- **Special Cases:**
+	- `dynamic`: Allows any type of value (use cautiously)
+	- `Runes`: Low-level character representations
+	- `Symbols`: Unique identifiers (less common)
+
+#### Lets discover Data types one by one:
+
+1. **Enumerations → (num)**:
+-  ** int:** Represents integers (whole numbers), such as:  125.
+-  ** double:** Represents floating-point numbers (numbers with decimals), such as: 3.1415. 
+
+**Implementation** :  
+
+```
+print('Explicit Initialization');
+  int expAge = 25;
+  double expPi = 3.1415;
+  print("my age is: $expAge");
+  print("pi value is: $expPi");
+  print("---------------------");
+  print('Implicit Initialization');
+  var impAge = 25;
+  var impPi = 3.1415;
+  print("my age is: $impAge");
+  print("pi value is: $impPi");
+```
+**Output** :  
+
+![image](/static/images/blog/boost-your-flutter-development-the-essential-guide-to-dart-data-types-image--02.png)
+
+2. **String**: Represents sequences of characters (text), which is encodded by single or double quotations. denoted by 'String' keyword. such as "name" or 'name'.
+
+**Implementation**:
+
+```
+  // in Dart:
+  print('Explicit');
+  String name = "xia afridi";
+  print("my name is: $name");
+  print('Implicit');
+  var name1 = 'xia afridi';
+  print("my name1 is: $name1");
+  // in Flutter:
+  Text("my name is: $name");
+```
+**Output** :  
+
+![image](/static/images/blog/boost-your-flutter-development-the-essential-guide-to-dart-data-types-image--03.png)
+
+
+
+3. **bool**: Represents Boolean values (true or false), denoted by 'bool' keyword.
+
+**Implementation:**
+
+```
+  print('Explicit');
+  bool flag = false;
+  String name = "xia afridi";
+  var checkName = flag == false ? "null" : "$name";
+  print("my name is: $checkName");
+```
+**Output** :  
+
+![image](/static/images/blog/boost-your-flutter-development-the-essential-guide-to-dart-data-types-image--04.png)
+
+
+
+4. **List:** An ordered collection of elements, where each element can be of any data type.
+**Implementation:**
+
+```
+  print('implicit initialization');
+  var intList = List<int>.empty(growable: true);
+  intList.add(1);
+  intList.addAll([2, 3, 4]);
+  print(intList);
+  print('-------------------------');
+  print("explicit initialization");
+  List<dynamic> randomList = ["xia", 12, false, 2.33];
+  for (var r in randomList) {
+    print(r);
+  }
+```
+**Output** :  
+
+![image](/static/images/blog/boost-your-flutter-development-the-essential-guide-to-dart-data-types-image--05.png)
+
+
+
+5. **Map:** An unordered collection of key-value pairs. Keys must be unique and can be of any data type, while values can be of any data type.
+**Implementation:**
+
+```
+  print('Implicit Initialization');
+  var personalData = {}; // Type: Map<dynamic, dynamic>
+  personalData.addEntries({
+    'name': 'xia',
+    'age': 25,
+    'isGraduated': true,
+    'cgpa': 3.023,
+  }.entries);
+  print(personalData);
+  print('-----------------------');
+  print('Explicit Initialization');
+  Map<int, String> fruits = {
+    1: 'orange',
+    2: 'banana',
+    3: 'apple',
+    4: 'fine apple',
+    5: 'kiwi',
+  };
+  final fruitsEntriesFrom =
+      Map<int, String>.from(fruits); //copy version of original or
+  //Creates a Map with the same keys and values as [fruits].
+  print(fruitsEntriesFrom);
+```
+**Output** :  
+
+![image](/static/images/blog/boost-your-flutter-development-the-essential-guide-to-dart-data-types-image--06.png)
+
+
+
+6. **Sets:** An unordered collection of unique elements.
+**Implementation:**
+
+```
+  // decalare set using literal:
+  Set<String> sports = {
+    'cricket',
+    'hockey',
+    'footbal',
+    'table tennis',
+    'volley ball'
+  };
+  print(sports);
+  print('----------------------');
+  // declares using constructor:
+  final count = Set<int>.from({1, 2, 3, 4, 5, 6, 7, 8, 9, 10});
+  print(count);
+```
+**Output** :  
+
+![image](/static/images/blog/boost-your-flutter-development-the-essential-guide-to-dart-data-types-image--07.png)
+
+
+7. **Record**: are anonymous group multiple values of different types into a single unit.  it is immutable(values can't be changed after creation), aggregate type (each field has specific data type) and Fixed size.
+**Implementation:**
+
+```
+// record is compex data type in dart which can stores different data with multiple typed, params and returns.
+  (String, String, {int a, bool b}) record =
+      ('first', a: 2, b: true, 'last'); //contains both name and unnamed params
+  print(record.$1); // print single one record
+  print(record.a);
+  print('------');
+  print(record); // print whole record
+  print('------');
+
+  print('recode runtimetype: ${record.runtimeType}'); // type check
+  print('------');
+
+  ({int number, String name}) randRecord; // named typed record
+  randRecord =
+      (number: 10, name: 'Record Data'); // store values as named param.
+  print('named parameters record: $randRecord');
+  print('------');
+
+  // swaping integers with record data type using swap function
+  (int, int) swap((int, int) record) {
+    var (a, b) = record; // before swap values
+    print('before swap');
+    print(record);
+    print('after swap');
+    return (b, a); // after swap values
+  }
+
+  print('swap two ints with record using swap function');
+  print(swap((4, 8)));
+```
+**Output** :  
+
+![image](/static/images/blog/boost-your-flutter-development-the-essential-guide-to-dart-data-types-image--08.png)
+
+
+
+8. **Runes:** Represent individual characters within a String, encoded and decoding using their Unicode code points.
+**Implementation:**
+
+```
+ String heart = '\u2665'; // heart unicode for emoji
+  print('heart: $heart'); // heart emoji prints
+  print('--------');
+  // when runes convert to list its type changes from Runes to List<int>.
+  List<int> heartRuneList = heart.runes.toList();
+  print('heart runes list: $heartRuneList');
+  print('--------');
+  //Dart uses UTF-16 for String encoding internally. However, when you access a String's runes property,
+  //Dart automatically handles any surrogate pairs behind the scenes.
+  String directHit = '\u2665'; // This emoji requires a surrogate pair in UTF-16
+  if (directHit.isEmpty) {
+    print('emoji string is null');
+  } else {
+    int getSarrogatePair =
+        directHit.runes.first; // equivalent to this.elementAt(0)
+    print(
+        'sarrogate: $getSarrogatePair'); // Prints the complete Unicode code point for the emoji
+  }
+  print('--------');
+  // convert to string chars
+  String runesToString =
+      String.fromCharCodes(heart.runes); //heart.runes converts the string
+  // to an iterable of its Unicode code points.
+  print('runes to String: $runesToString');
+```
+**Output** :  
+
+![image](/static/images/blog/boost-your-flutter-development-the-essential-guide-to-dart-data-types-image--09.png)
+
+
+
+9. **Dynamic**: is a special type that can hold **any** data type. It provides flexibility but can lead to potential runtime errors if not used carefully. its is denoted by '**dynamic**' keyword.
+**Implementation:**
+
+```
+ print('before changes');
+  dynamic dynamicValue = "orange";
+  print("fruit is: $dynamicValue");
+  print('--------------------');
+  print('after changes');
+  dynamicValue = 30;
+  print("number is: $dynamicValue");
+```
+**Output** :  
+
+![image](/static/images/blog/boost-your-flutter-development-the-essential-guide-to-dart-data-types-image--10.png)
+
+
+
+10. **Symbols:** (Not commonly used) A unique and immutable identifier. it can be useful for reducing code size where symbol names remain consistent even if variable names are changed.
+**Implementation:**
+
+```
+  // declares litterals
+  Symbol symbol = #hi_symble;
+  print(symbol);
+  print('--------');
+
+  // declares using constructor
+  var mySymble = Symbol('this_is_my_symble');
+  print('${mySymble.runtimeType} $mySymble');
+  //
+  print('--------');
+
+  // here for for eqwuality i pick one word from both symble vars using contains function.
+  if (mySymble.toString().contains('symble') ==
+      symbol.toString().contains('symble')) {
+    print("symble is matched !");
+  } else {
+    print("symble is not matched !");
+  }
+  print('--------');
+  // used compareT+o function for comparing and for equality i used replaceAll function applied to one of the symble.
+  int symbCompareTo = mySymble.toString().compareTo(
+      symbol.toString().replaceAll(symbol.toString(), mySymble.toString()));
+  print(symbCompareTo);
+```
+**Output** :  
+
+![image](/static/images/blog/boost-your-flutter-development-the-essential-guide-to-dart-data-types-image--11.png)
+
+
+### **conclusion**:
+
+
+The above mentioned data types are the mostly used and valuable ones in dart language. once you master them then you can do wonders. i personally spent alot of time to prepares these for you, i hope it will be useful for you guys.
+
+Now you've explored the essential building blocks of Dart: its data types! With this foundation, you're ready to construct dynamic and powerful applications. Remember, mastering these data types unlocks a world of possibilities in Flutter/Dart development. So keep practicing, keep building, and keep creating amazing things!
+
+**'''**Your keys to unlocking powerful applications. Master them, and the world of development is yours.**'''**
